@@ -10,14 +10,14 @@ newPIR = PIR()
 newFile = File()
 array = []
 newFile.readData("Respaldo")
-if os.path.isfile("Respaldo2.txt"):
-    print("Existe")
-    file = open("Respaldo2.txt","a")
-else:
-    print("No existe")
-    file = open("Respaldo2.txt","w")
 try:
     while True:
+        if os.path.isfile("Respaldo2.txt"):
+            #print("Existe")
+            file = open("Respaldo2.txt","a")
+        else:
+            #print("No existe")
+            file = open("Respaldo2.txt","w")
         newDHT.leerTemperatura()
         newDHT.guardarDatosSQL()
         newDHT.guardarDatosMongo()
@@ -31,11 +31,12 @@ try:
         newHCR.guardarDatosMongo()
         #print("Distancia:",newHCR.retornarDistancia(),"cm")
         lista = (newDHT.retornarDatos(),newPIR.retornarDatosPIR(),newHCR.retornarDistancia())
+        #file = open("Respaldo2.txt","w")
+        file.write(str(lista)+os.linesep)
         array.append(lista)
         for x in array:
             print(x)
         newFile.saveData(x, "Respaldo")
-        file.write(str(lista)+os.linesep)
 except KeyboardInterrupt:
     print("adios")
 
